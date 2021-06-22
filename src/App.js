@@ -3,13 +3,13 @@ import Quiz from './components/quiz'
 function App() {
   const questions = [
     'Primeira Pergunta',
-    'Segunda Pergunta'
+    'Segunda Pergunta',
+    'Nova Pergunta'
   ]
 
   const results = {
-    0 : 'Nada',
-    1 : 'Somente um acerto',
-    2 : '2 Acertos'
+    2 : '2 ou menos marcadas',
+    3 : '3 marcadas'
   }
 
   return (

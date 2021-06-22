@@ -1,10 +1,12 @@
 import { useState } from "react";
+import '../../css/bootstrap.css'
+import './style.css'
 
 export default function Quiz({questions, results}) {
     const [answers, setAnswers] = useState(() => {
         let initAnswers = []
         questions.forEach(q => {
-            const answer = {key : (initAnswers.length), id : 'q' + (initAnswers.length), question: q, value: false}
+            const answer = {key : (initAnswers.length), id : 'q' + (initAnswers.length), question: q, value: 'off'}
             initAnswers.push(answer)
         })
         return initAnswers
@@ -20,7 +22,7 @@ export default function Quiz({questions, results}) {
     function handleClick(event) {
         let contCheck = 0
         answers.map((q) => {
-            if(q['value'])
+            if(q['value'] === 'on')
                 contCheck++
             return contCheck
         })
@@ -33,15 +35,25 @@ export default function Quiz({questions, results}) {
         }
     }
 
+    function handleSelect(event) {
+        let newAnswers = answers
+        newAnswers[event.target.id]['value'] = event.target.value
+        setAnswers(newAnswers)
+        console.log(answers)
+    }
+
     return (
         <form>
             {answers.map((q) => (
-                <label className='checkbox'>
-                    {q.question}
-                    <input key={q['key']} id={q['key']} name={q['id']} type='checkbox' onChange={handleChecked} />
-                </label>
+                <div className="question">
+                    <label class="form-label">
+                        {q.question}
+                        <input class="form-check-input" key={q['key'] + 's'} id={q['key']} name={q['id']} value="on" type='radio' onChange={handleSelect} />Sim
+                        <input class="form-check-input" key={q['key'] + 'n'} id={q['key']} name={q['id']} value='off' type='radio' onChange={handleSelect} />Não
+                    </label>
+                </div>
             ))}
-            <button type="button" onClick={handleClick}>Verificar</button>
+            <button class="btn btn-primary" type="button" onClick={handleClick}>Verificar</button>
         </form>
     );
 }
